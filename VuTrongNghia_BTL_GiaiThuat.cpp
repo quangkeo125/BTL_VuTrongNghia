@@ -671,7 +671,6 @@ int main()
 						cout<<"\t 0.Thoat"<<endl;
 						cout<<"\t chon:";
 						cin>>choose;
-						cout<<"NghiaDepTrai";
 						switch(choose)
 						{
 							case 1: nhapdspt(PT); break;
