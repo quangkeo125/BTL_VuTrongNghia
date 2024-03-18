@@ -95,11 +95,11 @@ void xuatDSSach(List &Q)
 {
 	Node*pSach;
 	cout<<"danh sach hien co:"<<endl;
-	cout<<setw(18)<<left<<"Ma Sach"<<"\t";
+	cout<<setw(15)<<left<<"Ma Sach"<<"\t";
 	cout<<setw(12)<<left<<"Ten Sach"<<"\t";
 
-	cout<<setw(7)<<left<<"Don Gia"<<"\t";
-	cout<<setw(10)<<left<<"Gia Thue Sach"<<"\t";
+	cout<<setw(10)<<left<<"Don Gia"<<"\t";
+	cout<<setw(15)<<left<<"Gia Thue Sach"<<"\t";
 	cout<<endl;
 	for(pSach=Q.Head;pSach!=NULL;pSach=pSach->next)
 	   xuatSach(pSach->info);
@@ -306,7 +306,7 @@ void DocFile(FILE *f, List &Q, char *name)
 		insertLast(Q,pNDT);
 	}
 	fclose(f);
-	cout<<"doc file thanh cong"<<endl;
+	cout<<"Doc file thanh cong"<<endl;
 	xuatDSSach(Q);
 }
 
@@ -371,16 +371,16 @@ PT.Tail=p;
 }
 }
 void nhappt ( phieuthu &x){
-	cout<<"\nma phieu thu: ";
+	cout<<"\n Ma phieu thu: ";
 	cin>>x.mapt;
-	cout<<"\nma so sinh vien: ";
+	cout<<"\n Ma so sinh vien: ";
 	cin>>x.mssv;
-	cout<<"\nho ten nguoi nop: ";
+	cout<<"\n Ho ten nguoi nop: ";
 	cin.ignore();
 	getline(cin,x.hotennguoinop);
-	cout<<"\nma sach: ";
+	cout<<"\n Ma sach: ";
 	cin>>x.maSach;
-	cout<<"\nngay muon: ";
+	cout<<"\n Ngay muon: ";
 	cin.ignore();
 	getline(cin, x.ngaymuon);	
 }
@@ -389,7 +389,7 @@ void nhapdspt ( LISTPT & PT){
 	int n;
 	NodePT * p;
 	phieuthu x;
-	cout <<" nhap so phieu thu: "; cin>>n;
+	cout <<" Nhap so phieu thu: "; cin>>n;
 	for (int i=1 ; i<=n ; i++)
 	{
 		nhappt (x);
@@ -411,13 +411,12 @@ void xuatpt ( phieuthu x){
 
 
 void xuatdspt ( LISTPT & PT){
-	NodePT *p;
-	cout<<"\n ds phieu thu hien co: \n";
-	cout<<"\n"<<setw(8) << "ma pt";
-	cout<<setw(15)<< "mssv";
-	cout<<setw(20)<< "ho ten sinh vien";
-	cout<<setw(15)<< "ma sach";
-	cout<<setw(15)<< "ngay muon"<<endl;
+	cout<<"\n Danh sach phieu thu hien co: \n"<<endl;
+	cout<<"\n"<<setw(8) << "Ma pt";
+	cout<<setw(15)<< "MSSV";
+	cout<<setw(20)<< "Ho ten sinh vien";
+	cout<<setw(15)<< "Ma sach";
+	cout<<setw(15)<< "Ngay muon"<<endl;
 	for ( NodePT *p = PT.Head; p!= NULL;p = p->next)
 	xuatpt( p->info);	
 }
@@ -432,7 +431,7 @@ void sapxeppt(LISTPT PT){
 	NodePT *p;
 	NodePT *q;
 	phieuthu tg;
-	cout<<"\nsap xep theo ma so sinh vien";
+	cout<<"\n Sap xep theo ma so sinh vien:";
 	for(p = PT.Head; p!=NULL; p=p->next)
 	for(q=p->next ; q!=NULL ; q=q->next){
 		if(p->info.mssv<q->info.mssv)
@@ -459,29 +458,28 @@ void luuf(LISTPT PT, char* filename){
 
 
 }
-void docf(LISTPT PT){
+void docf(LISTPT PT, char* filename){
 	khoitaoPT(PT);
 	FILE *f;
 	phieuthu x;
-	char filename[20];
 	NodePT*p;
-	cout<<"Mo file:\nCac FILE da luu:"<<endl;
-	char Ten[20];
-	FILE *t;
-	int i=0;
-	t=fopen("Ten FILE","r+b");
-while(true)
- {
- if(t == NULL){ fclose(t);
-break; 
-}
- 	fread(&Ten ,sizeof(Ten),1,t);
- 	if(feof(t))break;
- 	i++;
- 	cout<<"File "<<i<<": "<<Ten<<endl;
- 	}
- 	fclose(t);
-	cout<<"Nhap ten FILE muon mo: ";fflush(stdin);gets(filename);
+	// cout<<"Mo file:\nCac FILE da luu:"<<endl;
+	// char Ten[20];
+	// FILE *t;
+	// int i=0;
+// 	t=fopen("Ten FILE","r+b");
+// while(true)
+//  {
+//  if(t == NULL){ fclose(t);
+// break; 
+// }
+//  	fread(&Ten ,sizeof(Ten),1,t);
+//  	if(feof(t))break;
+//  	i++;
+//  	cout<<"File "<<i<<": "<<Ten<<endl;
+//  	}
+//  	fclose(t);
+// 	cout<<"Nhap ten FILE muon mo: ";fflush(stdin);gets(filename);
 	f=fopen(filename,"r+b");
 if(f == NULL)
  {
@@ -526,35 +524,37 @@ void DocFilePT(LISTPT PT, char* filename)
 		chencuoipt(PT,pNDT);
 	}
 	fclose(f);
-	cout<<"doc file thanh cong"<<endl;
+	cout<<"Doc file thanh cong"<<endl;
 	xuatdspt(PT);
 }
 
-void XoaNodeDau(LISTPT &PT){
-	{
-		if (PT.Head != NULL)
-		{
+void XoaNodeDau(LISTPT &PT){	
+	if (PT.Head != NULL) {
 			NodePT *p = PT.Head; 
 			PT.Head = PT.Head->next;
 			PT.Head->prev=NULL;
 			delete p;
-		}
-		if(PT.Head==NULL)
-		{
-			khoitaoPT(PT);
-		}
+			cout<<"Danh sach sau khi xoa phan tu dau tien: \n";
+			xuatdspt(PT);
 	}
+	if(PT.Head==NULL) {
+		cout<<"Danh sach rong"<<endl;
+			khoitaoPT(PT);
+	}
+
+
+
 }
 
 void XoaNodeCuoi(LISTPT &PT){
 	if (PT.Head->next == NULL) {
 		XoaNodeDau(PT);
 		}
-		for (NodePT *p = PT.Head; p != NULL; p = p->next) {
-			if (p->next == PT.Tail) {
-				delete PT.Tail;
-				p->next = NULL; 
-				PT.Tail = p; 
+	for (NodePT *p = PT.Head; p != NULL; p = p->next) {
+		if (p->next == PT.Tail) {
+			delete PT.Tail;
+			p->next = NULL; 
+			PT.Tail = p; 
 			}
 		}
 }
@@ -563,7 +563,7 @@ void XoaNodeCoKhoaBatKy (LISTPT &PT,int xoa ){
 	 NodePT *p;
 	p = timmapt (PT,xoa); //T�m ki?m ph?n t? d? x�a
 	if ( p == NULL ){
-		cout<<"ko co phan tu"; exit(1);
+		cout<<"Khong tim thay phan tu can xoa"<<endl;
 	} else {
 		if ( ( p == PT.Head ) && ( p == PT.Tail) ) { 
 			PT.Head = NULL; PT.Tail = NULL;
@@ -574,6 +574,8 @@ void XoaNodeCoKhoaBatKy (LISTPT &PT,int xoa ){
 			p -> next -> prev = p -> prev;
 			}
 		free(p);
+		cout<<"Danh sach sau khi xoa: ";
+		xuatdspt(PT);
 	}
 }
 
@@ -612,7 +614,7 @@ int main()
 						cout<<"\t|10.Sua dau sach "<<endl;
 						cout<<"\t|11.Chen dau sach sau ma nao do "<<endl;
 						cout<<"\t|0.Quay lai "<<endl;
-						cout<<"chon: ";
+						cout<<"\t|Chon: ";
 						cin>>chon;
 						switch(chon)
 						{
@@ -621,7 +623,7 @@ int main()
 									break;
 							case 2: xuatDSSach(Q); break;
 							case 3:
-							cout<<"nhap ma dau sach k: "; cin>>k;
+							cout<<"Nhap ma dau sach can tim: "; cin>>k;
 							pSach=search(Q,k);
 							if (pSach==NULL)
 							{
@@ -639,7 +641,7 @@ int main()
 									Luufile(f,Q,filename); break;
 							case 6: char x[20];
 									fflush(stdin);
-									cout<<"Nhap ten sach can tim x: "; gets(x);
+									cout<<"Nhap ten sach can tim: "; gets(x);
 									timTenSach(Q,x);
 									break;
 							case 7: Luufile(f,Q,filename); break;
@@ -659,7 +661,7 @@ int main()
 			}
 			case 2: {
 						do{
-						cout<<"\t 1, Nhap danh sach phieu thu"<<endl;
+						cout<<"\t 1. Nhap danh sach phieu thu"<<endl;
 						cout<<"\t 2. In phieu thu"<<endl;
 						cout<<"\t 3. Tim kiem phieu thu theo ma: "<<endl;
 						cout<<"\t 4. Sap xep phieu thu theo don gia giam dan:"<<endl;
@@ -668,8 +670,8 @@ int main()
 						cout<<"\t 7. Xoa phieu thu cuoi cung: "<<endl;
 						cout<<"\t 8. Luu file: "<<endl;
 						cout<<"\t 9. Doc file: "<<endl;
-						cout<<"\t 0.Thoat"<<endl;
-						cout<<"\t chon:";
+						cout<<"\t 0. Thoat"<<endl;
+						cout<<"\t Chon: ";
 						cin>>choose;
 						switch(choose)
 						{
@@ -677,49 +679,46 @@ int main()
 							case 2: xuatdspt(PT);break;
 							case 3:
 								{
-								cout<<"\n nhap ma can tim";
+								cout<<"\n Nhap ma can tim: ";
 								cin>>k;
 								p= timmapt(PT, k);
 								if ( p== NULL)
-								cout<<"\n khong tim thay ";
+								cout<<"\n Khong tim thay";
 								else {
-									cout<<"\n pt can tim la";
-									cout<<"\n"<<setw(10) << "ma pt";
-									cout<<setw(10)<< "ho ten nguoi dong";
-									cout<<setw(10)<< "thoi gian";
-									cout<<setw(10)<< "tong tien";
-									cout<<setw(10)<< "so tien giam";
-									cout<<setw(10)<< "so tien can dong";
-									xuatpt (p->info);
-									
+									cout<<"\n Phieu thu can tim la";
+									cout<<"\n"<<setw(10) << "Ma pt";
+									cout<<setw(10)<< "MSSV";
+									cout<<setw(10)<< "Ho ten sinh vien";
+									cout<<setw(10)<< "Ma sach";
+									cout<<setw(10)<< "Ngay muon";
+									xuatpt (p->info);									
+									}
 								}
-								}break;
+								break;
 								case 4: 
-								{
-								cout<<"danh sach pt da sap xep:";
-								sapxeppt(PT);
-								cout<<"\n";
-								}break;
+										{
+									cout<<"Danh sach phieu thu da sap xep:";
+									sapxeppt(PT);
+									cout<<"\n";
+									}
+								break;
 								
 								case 5: 
 								int xoa;
-								cout<<"nhap ma can xoa";
+								cout<<"Nhap ma phieu thu can xoa: ";
 								cin>>xoa;
 								XoaNodeCoKhoaBatKy(PT,xoa);
-								cout<<"danh sach sau khi xoa:";
-								xuatdspt(PT);
 								break;
 								
 								case 6: {
 								XoaNodeDau(PT);
-								cout<<"ds sau khi xoa phan tu dau tien: \n";
-								xuatdspt(PT);
+								
 								}
 								break;
 								
 								case 7:{
 									XoaNodeCuoi(PT);
-									cout<<"danh sach sau khi xoa phan tu cuoi cung:\n";
+									cout<<"Danh sach sau khi xoa phan tu cuoi cung: \n";
 									xuatdspt(PT);
 									break;
 								}
